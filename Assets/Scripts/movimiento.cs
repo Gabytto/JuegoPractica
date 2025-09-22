@@ -23,6 +23,9 @@ public class movimiento : MonoBehaviour
     private float mulDaño;
     // Variables timer
     [SerializeField]private timer timer;
+    // Inventario
+    public int rocasObtenidas;
+
 
     void Start()
     {
@@ -91,5 +94,8 @@ public class movimiento : MonoBehaviour
         rb.velocity = mov * speed * Time.fixedDeltaTime;
     }
 
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Auch!!!");
+    }
 }
