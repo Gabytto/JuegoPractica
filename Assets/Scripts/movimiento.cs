@@ -30,6 +30,8 @@ public class movimiento : MonoBehaviour
     [SerializeField] private timer timer;
     // Inventario
     public int rocasObtenidas;
+    // Disparo
+    [SerializeField] GameObject laser;
 
 
     void Start()
@@ -40,6 +42,7 @@ public class movimiento : MonoBehaviour
         ogDaño = daño;
         mulDaño = daño * 5f;
         vidaActual = vidaInicial;
+        
     }
 
     void Update()
@@ -94,6 +97,8 @@ public class movimiento : MonoBehaviour
         // Normalizado
         mov = new Vector2(movHorizontal, movVertical);
         mov = mov.normalized;
+
+        Disparar();
     }
     private void FixedUpdate()
     {
@@ -129,5 +134,15 @@ public class movimiento : MonoBehaviour
     {
         vidaActual += curaVida;
         Debug.Log("Tu vida actual es " + vidaActual);
+    }
+    void Disparar()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            GameObject b2 = Instantiate(laser,transform.position, Quaternion.identity);
+            Rigidbody2D rblaser = b2.GetComponent<Rigidbody2D>();
+            rblaser.velocity = Vector3.right * 10;
+            Destroy(rblaser, 2f);
+        }
     }
 }
