@@ -140,9 +140,6 @@ public class movimiento : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             GameObject b2 = Instantiate(laser,transform.position, Quaternion.identity);
-            Rigidbody2D rblaser = b2.GetComponent<Rigidbody2D>();
-            rblaser.velocity = Vector3.right * 10;
-            Destroy(rblaser, 2f);
         }
     }
 }
