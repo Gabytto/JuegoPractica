@@ -6,6 +6,7 @@ public class laser : MonoBehaviour
 {
     [SerializeField] private int velocidad = 10;
     [SerializeField] private float tiempoD = 2f;
+    public int daño = 50;
     private Rigidbody2D rb;
 
     private void Start()
