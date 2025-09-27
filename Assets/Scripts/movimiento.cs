@@ -32,6 +32,8 @@ public class movimiento : MonoBehaviour
     public int rocasObtenidas;
     // Disparo
     [SerializeField] GameObject laser;
+    [SerializeField] private cooldownTimer coolDownTimer;
+    
 
 
     void Start()
@@ -139,7 +141,12 @@ public class movimiento : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            GameObject b2 = Instantiate(laser,transform.position, Quaternion.identity);
+            if (!coolDownTimer.timerOn)
+            {
+                coolDownTimer.IniciarCooldown();
+                Debug.Log("Disparo realizado");
+                GameObject b2 = Instantiate(laser, transform.position, Quaternion.identity);
+            }
         }
     }
 }
