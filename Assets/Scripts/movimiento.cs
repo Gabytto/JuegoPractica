@@ -8,7 +8,7 @@ public class movimiento : MonoBehaviour
 {
     // Propiedades del pj
     private Rigidbody2D rb;
-    private int vidaInicial = 100;
+    private int vidaInicial = 200;
     private int vidaActual;
     private int dañoRecibido = 20;
     private int curaVida = 20;
@@ -145,7 +145,7 @@ public class movimiento : MonoBehaviour
             {
                 coolDownTimer.IniciarCooldown();
                 Debug.Log("Disparo realizado");
-                GameObject b2 = Instantiate(laser, transform.position, Quaternion.identity);
+                Instantiate(laser, transform.position, Quaternion.identity);
             }
         }
     }
