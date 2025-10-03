@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,8 @@ public class movimiento : MonoBehaviour
 {
     // Propiedades del pj
     private Rigidbody2D rb;
+    Animator animator;
+    private bool giroIzq;
     private int vidaInicial = 200;
     private int vidaActual;
     private int dañoRecibido = 20;
@@ -39,6 +42,7 @@ public class movimiento : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         ogSpeed = speed;
         mulSpeed = speed * valMulSpeed;
         ogDaño = daño;
@@ -105,6 +109,15 @@ public class movimiento : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = mov * speed * Time.fixedDeltaTime;
+        if (Math.Abs(rb.velocity.x) > 0 || Math.Abs(rb.velocity.y) > 0)
+        {
+            animator.SetFloat("xVelocity", 1);
+        }
+        else
+        {
+            animator.SetFloat("xVelocity", 0);
+        }
+        FlipSprite();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -146,7 +159,25 @@ public class movimiento : MonoBehaviour
                 coolDownTimer.IniciarCooldown();
                 Debug.Log("Disparo realizado");
                 Instantiate(laser, transform.position, Quaternion.identity);
+                animator.SetTrigger("Attack");
             }
+        }
+    }
+    private void FlipSprite()
+    {
+        if (rb.velocity.x < 0 && !giroIzq)
+        {
+            giroIzq = true;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1;
+            transform.localScale = ls;
+        }
+        else if(rb.velocity.x > 0 && giroIzq)
+        {
+            giroIzq = false;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1;
+            transform.localScale = ls;
         }
     }
 }
