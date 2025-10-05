@@ -108,7 +108,7 @@ public class movimiento : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        rb.velocity = mov * speed * Time.fixedDeltaTime;
+        rb.velocity = mov * speed;
         if (Math.Abs(rb.velocity.x) > 0 || Math.Abs(rb.velocity.y) > 0)
         {
             animator.SetFloat("xVelocity", 1);
@@ -154,15 +154,17 @@ public class movimiento : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
+            
             if (!coolDownTimer.timerOn)
             {
                 coolDownTimer.IniciarCooldown();
                 Debug.Log("Disparo realizado");
-                Instantiate(laser, transform.position, Quaternion.identity);
                 animator.SetTrigger("Attack");
+                Instantiate(laser, transform.position, Quaternion.identity);
             }
         }
     }
+
     private void FlipSprite()
     {
         if (rb.velocity.x < 0 && !giroIzq)
