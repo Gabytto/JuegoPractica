@@ -7,6 +7,8 @@ public class enemy : MonoBehaviour
     private int vidaInicial = 100;
     [SerializeField] private int vidaActual;
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private float duracionFlash = 0.15f;
 
 
 
@@ -15,6 +17,7 @@ public class enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         vidaActual = vidaInicial;
     }
 
@@ -30,8 +33,20 @@ public class enemy : MonoBehaviour
             Debug.Log("enemigo recibio un tiro");
             laser p = collision.GetComponent<laser>();
             vidaActual -= p.daño;
+            StartCoroutine(FlashEffect());
 
         }
+    }
+    private IEnumerator FlashEffect()
+    {
+        // Cambiar el color del sprite a rojo
+        spriteRenderer.color = Color.red;
+
+        // Esperar el tiempo definido en duracionFlash
+        yield return new WaitForSeconds(duracionFlash);
+
+        // Volver al color original (blanco, que no altera los colores del sprite)
+        spriteRenderer.color = Color.white;
     }
     private void Muerte()
     {

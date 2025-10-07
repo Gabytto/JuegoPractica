@@ -9,7 +9,9 @@ public class movimiento : MonoBehaviour
 {
     // Propiedades del pj
     private Rigidbody2D rb;
-    Animator animator;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private float duracionFlash = 0.20f;
     private bool giroIzq;
     private int vidaInicial = 200;
     private int vidaActual;
@@ -36,19 +38,20 @@ public class movimiento : MonoBehaviour
     // Disparo
     [SerializeField] GameObject laser;
     [SerializeField] private cooldownTimer coolDownTimer;
-    
+
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         ogSpeed = speed;
         mulSpeed = speed * valMulSpeed;
         ogDaño = daño;
         mulDaño = daño * 5f;
         vidaActual = vidaInicial;
-        
+
     }
 
     void Update()
@@ -125,6 +128,8 @@ public class movimiento : MonoBehaviour
         if (collision.collider.CompareTag("enemy"))
         {
             RecibirDaño();
+            StartCoroutine(FlashEffect());
+
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,6 +142,7 @@ public class movimiento : MonoBehaviour
     private void RecibirDaño()
     {
         vidaActual -= dañoRecibido;
+
         Debug.Log("Auch!!!");
         Debug.Log("Tu vida actual es " + vidaActual);
         if (vidaActual <= 0)
@@ -154,7 +160,7 @@ public class movimiento : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            
+
             if (!coolDownTimer.timerOn)
             {
                 coolDownTimer.IniciarCooldown();
@@ -187,12 +193,23 @@ public class movimiento : MonoBehaviour
             ls.x *= -1;
             transform.localScale = ls;
         }
-        else if(rb.velocity.x > 0 && giroIzq)
+        else if (rb.velocity.x > 0 && giroIzq)
         {
             giroIzq = false;
             Vector3 ls = transform.localScale;
             ls.x *= -1;
             transform.localScale = ls;
         }
+    }
+    private IEnumerator FlashEffect()
+    {
+        // Cambiar el color del sprite a rojo
+        spriteRenderer.color = Color.red;
+
+        // Esperar el tiempo definido en duracionFlash
+        yield return new WaitForSeconds(duracionFlash);
+
+        // Volver al color original (blanco, que no altera los colores del sprite)
+        spriteRenderer.color = Color.white;
     }
 }

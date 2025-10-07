@@ -1,0 +1,33 @@
+# Posibles titulos
+	- El ultimo guerrero
+	- El camino de la espada
+	- 
+
+# Objetivo del juego
+	- Acabar con todas las creaturas malignas que intentar destruir 
+	
+
+# Mecanicas centrales
+	-
+
+# Progresión del juegador
+	-
+
+# Diseño de niveles
+	-
+
+# Como ganar?
+	-
+
+# Como perder?
+	-
+
+# Jefe final
+	-
+
+# Lore
+	- El reinado Azul solía ser un lugar donde la paz y la armonía
+	reinaban, durante muchos generaciones vivieron sin guerras ni 
+	ataques. Hasta que un día sucedió lo que nadie se esperaba. El
+	reinado fue atacado por grandes ordas de goblins, el arte de la
+	batalla ya no era el fuerte de la 
