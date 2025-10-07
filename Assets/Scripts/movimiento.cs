@@ -160,7 +160,20 @@ public class movimiento : MonoBehaviour
                 coolDownTimer.IniciarCooldown();
                 Debug.Log("Disparo realizado");
                 animator.SetTrigger("Attack");
-                Instantiate(laser, transform.position, Quaternion.identity);
+                // --- INICIO DE LA MODIFICACIÓN CRUCIAL ---##############################################################
+                // 1. Instancia el láser y guarda la referencia
+                GameObject nuevoLaserGO = Instantiate(laser, transform.position, Quaternion.identity);
+
+                // 2. Obtiene el script 'laser'
+                laser laserScript = nuevoLaserGO.GetComponent<laser>();
+
+                // 3. Pasa la dirección usando la bandera 'giroIzq'
+                if (laserScript != null)
+                {
+                    // Llama al método SetDirection (que definiremos en laser.cs)
+                    laserScript.SetDirection(giroIzq);
+                }
+                // --- FIN DE LA MODIFICACIÓN CRUCIAL ---##########################################################
             }
         }
     }
