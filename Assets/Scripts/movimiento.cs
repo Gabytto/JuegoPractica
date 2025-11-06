@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class movimiento : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class movimiento : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float duracionFlash = 0.20f;
     private bool giroIzq;
-    private int vidaInicial = 200;
-    private int vidaActual;
+    public Image healthBar;
+    private float vidaInicial = 200f;
+    private float vidaActual;
     private int dañoRecibido = 20;
     private int curaVida = 20;
     // Variables para movimiento del pj
@@ -51,6 +53,7 @@ public class movimiento : MonoBehaviour
         ogDaño = daño;
         mulDaño = daño * 5f;
         vidaActual = vidaInicial;
+        healthBar.fillAmount = (vidaActual / vidaInicial);
 
     }
 
@@ -142,6 +145,10 @@ public class movimiento : MonoBehaviour
     private void RecibirDaño()
     {
         vidaActual -= dañoRecibido;
+        // 2. Asegurarse de que la vida no baje de 0
+        vidaActual = Mathf.Max(vidaActual, 0);
+        // Actualiza la barra de vida
+        healthBar.fillAmount = (vidaActual / vidaInicial);
 
         Debug.Log("Auch!!!");
         Debug.Log("Tu vida actual es " + vidaActual);
@@ -154,6 +161,10 @@ public class movimiento : MonoBehaviour
     private void RecibirCuracion()
     {
         vidaActual += curaVida;
+        // Asegurarse de que no supera la vida máxima
+        vidaActual = Mathf.Min(vidaActual, vidaInicial);
+        // Actualiza la barra de vida
+        healthBar.fillAmount = (vidaActual / vidaInicial);
         Debug.Log("Tu vida actual es " + vidaActual);
     }
     void Disparar()

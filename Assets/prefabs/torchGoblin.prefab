@@ -52,7 +52,7 @@ MonoBehaviour:
   pointA: {fileID: 0}
   pointB: {fileID: 0}
   player: {fileID: 0}
-  speed: 5
+  speed: 3
   detectionRange: 5
 --- !u!212 &3913504277253587921
 SpriteRenderer:
