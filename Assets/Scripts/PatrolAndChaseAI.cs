@@ -20,7 +20,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance < detectionRange)
