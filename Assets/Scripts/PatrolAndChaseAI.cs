@@ -14,17 +14,26 @@ public class PatrolAndChaseAI : MonoBehaviour
     private Rigidbody2D rb;
     public float pauseDuration = 2f;
     private bool isPaused = false;
+    private Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         currentTarget = pointA;
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-        if (isPaused) return;
+        if (isPaused)
+        {
+            if (anim != null)
+            {
+                anim.SetFloat("Speed", 0f);
+            }
+            return;
+        }
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance < detectionRange)
         {
@@ -35,6 +44,15 @@ public class PatrolAndChaseAI : MonoBehaviour
         {
 
             Patrol();
+        }
+        if (anim != null)
+        {
+            // Obtenemos la magnitud (longitud) del vector de velocidad. 
+            // Si se está moviendo, el valor será alto; si está detenido, será 0.
+            float currentSpeed = rb.velocity.magnitude;
+
+            // Asignamos la velocidad al parámetro "Speed" del Animator
+            anim.SetFloat("Speed", currentSpeed);
         }
     }
     void Patrol()
