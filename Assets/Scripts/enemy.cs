@@ -9,14 +9,16 @@ public class enemy : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private float duracionFlash = 0.15f;
+    private Animator animator;
 
-
-
+    //PRUEBA
+    private bool giroIzq;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         vidaActual = vidaInicial;
     }
@@ -25,6 +27,7 @@ public class enemy : MonoBehaviour
     void Update()
     {
         Muerte();
+        FlipSprite();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -54,5 +57,24 @@ public class enemy : MonoBehaviour
         {
             gameObject.SetActive(false);
         }      
+    }
+
+    //PRUEBA
+    private void FlipSprite()
+    {
+        if (rb.velocity.x < 0 && !giroIzq)
+        {
+            giroIzq = true;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1;
+            transform.localScale = ls;
+        }
+        else if (rb.velocity.x > 0 && giroIzq)
+        {
+            giroIzq = false;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1;
+            transform.localScale = ls;
+        }
     }
 }
