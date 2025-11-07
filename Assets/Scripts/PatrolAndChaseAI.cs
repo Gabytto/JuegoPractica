@@ -12,6 +12,8 @@ public class PatrolAndChaseAI : MonoBehaviour
     public float detectionRange = 5f;
     private Transform currentTarget;
     private Rigidbody2D rb;
+    public float pauseDuration = 2f;
+    private bool isPaused = false;
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (isPaused) return;
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance < detectionRange)
         {
@@ -33,20 +36,32 @@ public class PatrolAndChaseAI : MonoBehaviour
 
             Patrol();
         }
+    }
+    void Patrol()
+    {
+        if (currentTarget == null || isPaused) return;
 
-        void Patrol()
+        float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
+
+        if (distanceToTarget < 0.5f)
         {
-            float distanceToTarget = Vector2.Distance(transform.position, currentTarget.position);
+            // 1. Activar la pausa y detener el movimiento
+            isPaused = true;
 
-            if (distanceToTarget < 0.5f)
-            {
-                currentTarget = currentTarget == pointA ? pointB : pointA;
-            }
+            // Detenemos la velocidad inmediatamente al llegar
+            rb.velocity = Vector2.zero;
 
+            // 2. Iniciar la corutina para el tiempo de espera
+            StartCoroutine(StartPause());
+
+            // NOTA: El cambio de 'currentTarget' se hará dentro de StartPause()            
+        }
+        if (!isPaused)
+        {
             MoveTowards(currentTarget.position);
         }
+            
     }
-
     void MoveTowards(Vector3 targetPosition)
     {
         // 1. Calcular la dirección
@@ -60,5 +75,16 @@ public class PatrolAndChaseAI : MonoBehaviour
         if (direction.x > 0.01f) { /* Voltear derecha */ } 
         else if (direction.x < -0.01f) { /* Voltear izquierda */ }
     }
+    IEnumerator StartPause()
+    {
+        // 1. Esperar el tiempo definido
+        // La ejecución del script se detiene aquí hasta que pase 'pauseDuration'
+        yield return new WaitForSeconds(pauseDuration);
 
+        // 2. Cambiar al siguiente objetivo
+        currentTarget = currentTarget == pointA ? pointB : pointA;
+
+        // 3. Desactivar la pausa para que FixedUpdate pueda reanudar el movimiento
+        isPaused = false;
+    }
 }

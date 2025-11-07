@@ -52,8 +52,9 @@ MonoBehaviour:
   pointA: {fileID: 0}
   pointB: {fileID: 0}
   player: {fileID: 0}
-  speed: 2.5
+  speed: 2
   detectionRange: 5
+  pauseDuration: 2
 --- !u!212 &3913504277253587921
 SpriteRenderer:
   m_ObjectHideFlags: 0
