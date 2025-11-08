@@ -100788,6 +100788,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 21929460}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_5
@@ -121303,6 +121311,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1409157431}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_2
@@ -127010,6 +127026,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 277984006}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_1
@@ -127300,6 +127324,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1156813216}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_3
@@ -127499,6 +127531,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 222273818}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_7
@@ -128460,6 +128500,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1459075729}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_0
@@ -129268,6 +129316,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1349435594}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_6
@@ -129341,6 +129397,14 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1477223191}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: chaseSpeed
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -640681749109637140, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
+      propertyPath: patrolSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3913504277253586990, guid: f007c4729ce558b4d847c3f67639c672, type: 3}
       propertyPath: m_Name
       value: torchGoblin_4

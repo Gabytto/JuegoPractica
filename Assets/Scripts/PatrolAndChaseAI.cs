@@ -16,11 +16,17 @@ public class PatrolAndChaseAI : MonoBehaviour
     private bool isPaused = false;
     private Animator anim;
 
+    public float patrolSpeed = 2.0f;     // Nueva: Velocidad de patrullaje
+    public float chaseSpeed = 3.5f;      // Nueva: Velocidad al perseguir al jugador
+    private float currentSpeedSetting;     // Mantendremos la velocidad actual aquí
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentTarget = pointA;
+        // Inicializar con la velocidad de patrullaje
+        currentSpeedSetting = patrolSpeed;
     }
 
     // Update is called once per frame
@@ -32,17 +38,20 @@ public class PatrolAndChaseAI : MonoBehaviour
             {
                 anim.SetFloat("Speed", 0f);
             }
+            // Asegurarse de que el Rigidbody esté totalmente detenido si está pausado
+            rb.velocity = Vector2.zero;
             return;
         }
         float playerDistance = Vector3.Distance(transform.position, player.position);
         if (playerDistance < detectionRange)
         {
-
+            // 1. Persecución: Aumentar velocidad y establecer objetivo
+            currentSpeedSetting = chaseSpeed;
             MoveTowards(player.position);
         }
         else
         {
-
+            currentSpeedSetting = patrolSpeed;
             Patrol();
         }
         if (anim != null)
@@ -87,7 +96,7 @@ public class PatrolAndChaseAI : MonoBehaviour
 
         // 2. Mover el objeto usando la velocidad del Rigidbody
         // Multiplicamos 'direction' por 'speed'
-        rb.velocity = direction * speed;
+        rb.velocity = direction * currentSpeedSetting;
 
         // Opcional: Volteo del sprite si estás en vista lateral
         if (direction.x > 0.01f) { /* Voltear derecha */ } 
