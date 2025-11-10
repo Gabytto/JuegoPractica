@@ -26,7 +26,6 @@ public class enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Muerte();
         FlipSprite();
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -38,6 +37,10 @@ public class enemy : MonoBehaviour
             vidaActual -= p.daño;
             StartCoroutine(FlashEffect());
 
+            if (vidaActual <= 0)
+            {
+                ManejarMuerte(); // Llamamos a la nueva función de muerte
+            }
         }
     }
     private IEnumerator FlashEffect()
@@ -51,12 +54,17 @@ public class enemy : MonoBehaviour
         // Volver al color original (blanco, que no altera los colores del sprite)
         spriteRenderer.color = Color.white;
     }
-    private void Muerte()
+    private void ManejarMuerte()
     {
-        if (vidaActual <= 0)
+        // LÓGICA DE LA MISIÓN: Llama al QuestManager para registrar la baja
+        if (QuestManager.Instance != null)
         {
-            gameObject.SetActive(false);
-        }      
+            QuestManager.Instance.AddGobblinKill();
+            // Muestra en consola que la muerte fue registrada (opcional para depuración)
+            Debug.Log("Quest: Gobblin eliminado y contador actualizado.");
+        }
+
+        gameObject.SetActive(false);
     }
 
     //PRUEBA
