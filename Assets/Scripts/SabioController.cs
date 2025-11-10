@@ -63,7 +63,7 @@ public class SabioController : MonoBehaviour
         switch (estado)
         {
             case 0: // Misión Inactiva (Primer encuentro)
-                DialogoTexto.text = "Joven héroe, necesito **8 Gotas de Sangre de Gobblin** de la mina para una pócima. ¡Límpiame esa mina!";
+                DialogoTexto.text = "Hola joven Guerrero, hay una orda de Gobblins que se apoderó de la mina. Acaba con ellos y tráeme 8 Gobblin Blood para poder hacer una poción.";
                 QuestManager.Instance.Estado_Quest_Sabio = 1; // Misión Aceptada
                 break;
 
