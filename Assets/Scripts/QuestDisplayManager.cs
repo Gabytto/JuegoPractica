@@ -7,22 +7,21 @@ using UnityEngine.UI;
 public class QuestDisplayManager : MonoBehaviour
 {
     [Header("Referencias de la UI")]
-
-    // Nueva Referencia: ¡Referencia al panel principal que quieres activar/desactivar!
+    // Referencia al panel principal para activar/desactivar
     public GameObject QuestPanelGameObject;
 
     [Header("Referencias de la UI")]
-    // 1. ItemIcon: Dónde está la poción
+    // 1. ItemIcon: Imagen del item necesario para completar la quest
     public Image ItemIcon;
 
-    // 2. cantidad: Dónde está el 0/0
+    // 2. cantidad: Contador del item de quest ej: 5/8
     public TextMeshProUGUI CantidadTexto;
 
-    // 3. Text (TMP): Dónde están las instrucciones
+    // 3. infoMision: instrucciones de la misión
     public TextMeshProUGUI InstruccionesTexto;
 
     [Header("Recursos de la Misión")]
-    // Sprite del ítem requerido (¡Arrastra el sprite aquí!)
+    // Sprite del ítem requerido para la misión
     public Sprite goblinBloodSprite;
 
 
@@ -37,14 +36,13 @@ public class QuestDisplayManager : MonoBehaviour
             return;
         }
 
-        // 2. Desactivar el panel *externo* al inicio
-        // Usamos la referencia pública QuestPanelGameObject
+        // 2. Desactivar el panel al inicio
         QuestPanelGameObject.SetActive(false);
     }
 
     void Update()
     {
-        // Usamos el Singleton de tu QuestManager
+        // Usamos el Singleton de QuestManager
         if (QuestManager.Instance != null)
         {
             UpdateQuestDisplay();
@@ -61,7 +59,7 @@ public class QuestDisplayManager : MonoBehaviour
         {
             if (!QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(true);
         }
-        else // Si Inactiva (0) o Entregada (3), ocultar el panel
+        else // Si 0 (Inactiva) o 3 (Entregada), ocultar el panel
         {
             if(QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
             return;
@@ -72,7 +70,6 @@ public class QuestDisplayManager : MonoBehaviour
         {
             ItemIcon.sprite = goblinBloodSprite;
         }
-
 
         // 3. Obtener el Progreso
         int count = QuestManager.Instance.Gobblin_Blood_Count;
@@ -86,7 +83,7 @@ public class QuestDisplayManager : MonoBehaviour
                 CantidadTexto.text = $"{count} / {target}";
 
                 // Instrucción
-                InstruccionesTexto.text = "Objetivo: Derrota Goblins en la mina para recolectar sus materiales.";
+                InstruccionesTexto.text = "Objetivo: Derrota Goblins cerca de la mina de oro para recolectar 'Sangre de Gobblin'.";
                 break;
 
             case 2: // Objetivo Cumplido, listo para entregar

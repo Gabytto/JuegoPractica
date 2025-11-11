@@ -10,7 +10,7 @@ public class SabioController : MonoBehaviour
     public TextMeshProUGUI DialogoTexto; // Componente de texto para mostrar el diálogo
 
     [Header("Indicador de Misión")]
-    public GameObject IconoMision; // El objeto con el sprite del signo de admiración ($!$)
+    public GameObject IconoMision; // El objeto con el sprite del signo de admiración
 
     [Header("Configuración de la Interacción")]
     public KeyCode TeclaInteraccion = KeyCode.E; // La tecla que el jugador debe presionar
@@ -63,18 +63,18 @@ public class SabioController : MonoBehaviour
         switch (estado)
         {
             case 0: // Misión Inactiva (Primer encuentro)
-                DialogoTexto.text = "Hola joven Guerrero, hay una orda de Gobblins que se apoderó de la mina. Acaba con ellos y tráeme 8 Gobblin Blood para poder hacer una poción.";
+                DialogoTexto.text = "Hola joven Guerrero, hay una horda de Gobblins que se apoderó de la mina de oro. Acaba con ellos y tráeme 8 'Gobblin's Blood' para estudiar de donde vienen esas creaturas.";
                 QuestManager.Instance.Estado_Quest_Sabio = 1; // Misión Aceptada
                 break;
 
             case 1: // Misión Aceptada (En curso)
                 int recolectado = QuestManager.Instance.Gobblin_Blood_Count;
                 int requerido = QuestManager.Gobblin_Blood_Target;
-                DialogoTexto.text = $"Vuelve cuando tengas las 8 Gotas. Llevas {recolectado}/{requerido}. ¡Date prisa!";
+                DialogoTexto.text = $"Vuelve cuando tengas los 8 'Gobblin's blood'. Llevas {recolectado}/{requerido}. ¡Date prisa!";
                 break;
 
             case 2: // Objetivo Cumplido (Listo para entregar)
-                DialogoTexto.text = "¡Excelente! Gracias a ti, la mina vuelve a ser segura y tengo mis materiales.";
+                DialogoTexto.text = "¡Excelente! Gracias a ti, nuestro reino ha recuperado el control de la mina de oro. Además podré estudiar mejor a esas creaturas con las muestras que me haz traído.";
 
                 // Acción de finalización:
                 QuestManager.Instance.Estado_Quest_Sabio = 3; // Misión Entregada
