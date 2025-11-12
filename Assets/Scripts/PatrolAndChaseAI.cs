@@ -15,6 +15,7 @@ public class PatrolAndChaseAI : MonoBehaviour
     public float pauseDuration = 2f;
     private bool isPaused = false;
     private Animator anim;
+    [HideInInspector] public bool isKnockedBack = false; // ¡NUEVO! Bandera pública para que el script de vida la pueda activar.
 
     public float patrolSpeed = 2.0f;     // Nueva: Velocidad de patrullaje
     public float chaseSpeed = 3.5f;      // Nueva: Velocidad al perseguir al jugador
@@ -32,6 +33,16 @@ public class PatrolAndChaseAI : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        // ¡NUEVO! Si está en knockback, no ejecutamos la lógica de movimiento.
+        if (isKnockedBack)
+        {
+            // No hacemos nada, el Rigidbody es controlado por la fuerza del knockback.
+            if (anim != null)
+            {
+                anim.SetFloat("Speed", 0f);
+            }
+            return;
+        }
         if (isPaused)
         {
             if (anim != null)

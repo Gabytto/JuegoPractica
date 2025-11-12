@@ -18,7 +18,7 @@ public class movimiento : MonoBehaviour
     private float vidaInicial = 200f;
     private float vidaActual;
     private int dañoRecibido = 20;
-    private int curaVida = 20;
+    private int curaVida = 100;
     // Variables para movimiento del pj
     private int movHorizontal;
     private int movVertical;

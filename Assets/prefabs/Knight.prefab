@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2562626387815156593}
+  - component: {fileID: 1435358983129978042}
   - component: {fileID: 2562626387815156558}
   - component: {fileID: 2562626387815156557}
   - component: {fileID: 2562626387815156556}
@@ -36,6 +37,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1435358983129978042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2562626387815156592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5627e0be0de5e149bc7c16dc20ef89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  player: {fileID: 0}
+  speed: 5
+  detectionRange: 5
+  pauseDuration: 2
+  isKnockedBack: 0
+  patrolSpeed: 2
+  chaseSpeed: 3.5
 --- !u!212 &2562626387815156558
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101,6 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaActual: 0
+  knockbackForce: 10
+  knockbackDuration: 0.2
+  aiController: {fileID: 0}
 --- !u!95 &2562626387815156556
 Animator:
   serializedVersion: 5

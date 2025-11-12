@@ -55,6 +55,9 @@ MonoBehaviour:
   speed: 2
   detectionRange: 5
   pauseDuration: 2
+  isKnockedBack: 0
+  patrolSpeed: 2
+  chaseSpeed: 3.5
 --- !u!212 &3913504277253587921
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -120,6 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaActual: 0
+  knockbackForce: 7
+  knockbackDuration: 0.25
+  aiController: {fileID: -640681749109637140}
 --- !u!50 &3913504277253586991
 Rigidbody2D:
   serializedVersion: 4
