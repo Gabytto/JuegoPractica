@@ -11,6 +11,7 @@ public class SabioController : MonoBehaviour
 
     [Header("Indicador de Misión")]
     public GameObject IconoMision; // El objeto con el sprite del signo de admiración
+    public GameObject PanelInteraccion;
 
     [Header("Configuración de la Interacción")]
     public KeyCode TeclaInteraccion = KeyCode.E; // La tecla que el jugador debe presionar
@@ -126,7 +127,21 @@ public class SabioController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             jugadorCerca = true;
-            // Opcional: Mostrar un pequeño mensaje de "Presiona [E] para hablar"
+
+            int estado = QuestManager.Instance.Estado_Quest_Sabio;
+
+            // Mostrar el panel de interacción SOLAMENTE si el Sabio tiene una misión para dar (estado 0) 
+            // o para recibir (estado 2).
+            if (estado == 0 || estado == 2)
+            {
+                // 1. Ocultamos el signo de admiración
+                if (IconoMision != null)
+                    IconoMision.SetActive(false);
+
+                // 2. Mostramos el panel de "Presioná 'E' para hablar..."
+                if (PanelInteraccion != null)
+                    PanelInteraccion.SetActive(true);
+            }
         }
     }
 
@@ -135,7 +150,17 @@ public class SabioController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             jugadorCerca = false;
-            // Opcional: Ocultar el mensaje de interacción
+
+            // 1. Ocultamos el panel de "Presioná 'E' para hablar..."
+            if (PanelInteraccion != null)
+                PanelInteraccion.SetActive(false);
+
+            // 2. Volvemos a mostrar el IconoMision, pero solo si debe estar activo 
+            // (esto ya lo maneja la función ActualizarIconoMision, pero la llamamos
+            // aquí para asegurar que se muestre si es necesario).
+            ActualizarIconoMision();
+
+            // También cerramos el panel de diálogo si estaba abierto al salir del trigger
             if (DialogoPanel != null)
                 DialogoPanel.SetActive(false);
         }
