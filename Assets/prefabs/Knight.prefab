@@ -122,10 +122,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f851c38a4cdef8f44a4b580d90ef0477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisEnemyType: 2
+  enemyConfigurations:
+  - type: 1
+    health: 100
+    damage: 20
+    patrolSpeed: 1.5
+  - type: 2
+    health: 200
+    damage: 50
+    patrolSpeed: 2.5
+  - type: 3
+    health: 500
+    damage: 100
+    patrolSpeed: 2.5
+  damageDealt: 0
   vidaActual: 0
   knockbackForce: 10
   knockbackDuration: 0.2
-  aiController: {fileID: 0}
+  aiController: {fileID: 1435358983129978042}
 --- !u!95 &2562626387815156556
 Animator:
   serializedVersion: 5
