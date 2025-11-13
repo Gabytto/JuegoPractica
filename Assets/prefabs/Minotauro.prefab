@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4811710049492390047}
   - component: {fileID: 4811710049492390045}
   - component: {fileID: 4811710049492390046}
+  - component: {fileID: 7754657837382827829}
   - component: {fileID: 7542786841098483873}
   - component: {fileID: 7879449507525297428}
   - component: {fileID: 8927900887015413283}
@@ -109,6 +110,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7754657837382827829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811710049492390032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5627e0be0de5e149bc7c16dc20ef89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  player: {fileID: 0}
+  speed: 5
+  detectionRange: 5
+  pauseDuration: 2
+  isKnockedBack: 0
+  patrolSpeed: 2
+  chaseSpeed: 3.5
 --- !u!114 &7542786841098483873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +161,7 @@ MonoBehaviour:
   vidaActual: 0
   knockbackForce: 10
   knockbackDuration: 0.2
-  aiController: {fileID: 1435358983129978042, guid: 997830b0ffb83e1469120087f0ecdce9, type: 3}
+  aiController: {fileID: 7754657837382827829}
 --- !u!50 &7879449507525297428
 Rigidbody2D:
   serializedVersion: 4
