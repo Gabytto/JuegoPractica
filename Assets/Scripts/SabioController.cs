@@ -20,6 +20,7 @@ public class SabioController : MonoBehaviour
     [Header("Objetos Afectados por la Misión")]
     public SpriteRenderer MinaSpriteRenderer; // Referencia al componente SpriteRenderer de la Mina
     public Sprite MinaActivadaSprite; // Sprite que se debe usar al completar la misión
+    public MinePortal MinePortalController;
 
     void Start()
     {
@@ -82,10 +83,30 @@ public class SabioController : MonoBehaviour
                 QuestManager.Instance.Gobblin_Blood_Count = 0; // Se consumen los items
 
                 ActualizarSpriteMina(); // Cambia el sprite de la mina
+                if (MinePortalController != null)
+                {
+                    MinePortalController.ActivatePortal(); // <--- ¡AQUÍ SE ACTIVA!
+                }
+
                 break;
 
             case 3: // Misión Entregada (Misión completada)
-                DialogoTexto.text = "Te has ganado mi respeto. Ahora, un nuevo desafío te espera...";
+                // Verificamos si la Misión 2 ya fue aceptada
+            if (QuestManager.Instance.Estado_Quest_Ermitaño == 0)
+            {
+                DialogoTexto.text = "Te has ganado mi respeto. Ahora, un nuevo desafío te espera: el conocimiento que busco está en manos de un viejo ermitaño que vive en el corazón de la mina. ¡Ve! El camino ya está abierto. Cuando lo encuentres, dile que vas de mi parte. ";
+                
+                // Misión 2: Aceptada
+                QuestManager.Instance.Estado_Quest_Ermitaño = 1; 
+            }
+            else if (QuestManager.Instance.Estado_Quest_Ermitaño == 1)
+            {
+                DialogoTexto.text = "El ermitaño te espera. No pierdas tiempo. El camino a través de la mina está abierto.";
+            }
+            else // Misión 2 terminada o más avanzada
+            {
+                 DialogoTexto.text = "Gracias por tu servicio. Vuelve pronto si necesitas algo.";
+            }
                 break;
         }
     }
