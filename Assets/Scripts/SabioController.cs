@@ -18,10 +18,13 @@ public class SabioController : MonoBehaviour
     private bool jugadorCerca = false;
 
     [Header("Objetos Afectados por la Misión")]
-    public SpriteRenderer MinaSpriteRenderer; // Referencia al componente SpriteRenderer de la Mina
+    public SpriteRenderer MinaSpriteRenderer; // Referencia al componente SpriteRenderer de la Mina INACTIVA
     public Sprite MinaActivadaSprite; // Sprite que se debe usar al completar la misión
-    public MinePortal MinePortalController;
 
+    // ¡CORRECCIÓN! Usamos el Prefab y el punto de spawn para instanciar
+    public GameObject MinaPortalPrefab;     // <-- Asigna aquí el Prefab de la Mina Activada
+    public Transform MinaPortalSpawnPoint;  // <-- Asigna aquí la posición donde aparece la Mina (ej: la Mina Inactiva)
+                                            // La línea "public MinePortal MinePortalController;" ya no es necesaria y debe eliminarse.
     void Start()
     {
         // Asegúrate de que el panel de diálogo esté oculto al inicio
@@ -83,9 +86,18 @@ public class SabioController : MonoBehaviour
                 QuestManager.Instance.Gobblin_Blood_Count = 0; // Se consumen los items
 
                 ActualizarSpriteMina(); // Cambia el sprite de la mina
-                if (MinePortalController != null)
+                if (MinaPortalPrefab != null && MinaPortalSpawnPoint != null)
                 {
-                    MinePortalController.ActivatePortal(); // <--- ¡AQUÍ SE ACTIVA!
+                    GameObject portalGO = Instantiate(MinaPortalPrefab,
+                                                      MinaPortalSpawnPoint.position,
+                                                      Quaternion.identity);
+
+                    MinePortal portalScript = portalGO.GetComponent<MinePortal>();
+                    if (portalScript != null)
+                    {
+                        // EL PORTAL OBTIENE EL DESTINO DEL QUESTMANAGER. SOLO NECESITA ACTIVARSE.
+                        portalScript.ActivatePortal();
+                    }
                 }
 
                 break;
@@ -101,7 +113,7 @@ public class SabioController : MonoBehaviour
             }
             else if (QuestManager.Instance.Estado_Quest_Ermitaño == 1)
             {
-                DialogoTexto.text = "El ermitaño te espera. No pierdas tiempo. El camino a través de la mina está abierto.";
+                DialogoTexto.text = "El Ermitaño te espera. No pierdas tiempo. El camino a través de la mina está abierto.";
             }
             else // Misión 2 terminada o más avanzada
             {

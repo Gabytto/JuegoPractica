@@ -4,43 +4,40 @@ using UnityEngine;
 
 public class MinePortal : MonoBehaviour
 {
-    // ASIGNAR EN EL INSPECTOR: El Transform del punto de spawn dentro del laberinto.
-    public Transform mineInteriorSpawnPoint;
-
-    // Bandera que será activada por el SabioController.
+    // Bandera que serÃ¡ activada por el SabioController.
     public bool isPortalActive = false;
 
-    // Este objeto debe tener un Collider2D con la opción "Is Trigger" marcada.
+    // Este objeto debe tener un Collider2D con la opciÃ³n "Is Trigger" marcada.
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. Verifica si quien entró es el jugador (asegúrate que el jugador tenga el Tag "Player").
-        // 2. Verifica si el portal ha sido activado por la misión.
         if (other.CompareTag("Player") && isPortalActive)
         {
-            if (mineInteriorSpawnPoint != null)
-            {
-                TeleportPlayer(other.gameObject);
-            }
-            else
-            {
-                Debug.LogError("¡ERROR! 'Mine Interior Spawn Point' no está asignado en el Inspector de MinePortal.");
-            }
+            TeleportPlayer(other.gameObject);
         }
         else if (other.CompareTag("Player") && !isPortalActive)
         {
-            // Opcional: Puedes mostrar un mensaje al jugador si intenta entrar antes de tiempo.
-            Debug.Log("La mina está cerrada. El sabio debe tener la llave...");
+            Debug.Log("La mina estÃ¡ cerrada. El sabio debe tener la llave...");
         }
     }
 
     private void TeleportPlayer(GameObject playerToTeleport)
     {
-        // Mueve la posición del jugador al punto de spawn dentro del laberinto
-        playerToTeleport.transform.position = mineInteriorSpawnPoint.position;
-        Debug.Log("Jugador teletransportado al interior del laberinto de la mina.");
+        // ðŸš¨ CAMBIO CLAVE: Usa la referencia del QuestManager
+        Transform destino = QuestManager.Instance.MineInteriorSpawnPoint;
+
+        if (destino != null)
+        {
+            // Mueve la posiciÃ³n del jugador al punto de spawn dentro del laberinto
+            playerToTeleport.transform.position = destino.position;
+            Debug.Log("Jugador teletransportado al interior del laberinto de la mina.");
+        }
+        else
+        {
+            Debug.LogError("Â¡ERROR! El punto de spawn interior no estÃ¡ asignado en QuestManager. Por favor, asigna 'MineEntrance_InteriorSpawn' al QuestManager en el Inspector.");
+        }
     }
 
-    // Método público llamado desde el SabioController al completar la Misión 1
+    // MÃ©todo pÃºblico llamado desde el SabioController al completar la MisiÃ³n 1
     public void ActivatePortal()
     {
         isPortalActive = true;

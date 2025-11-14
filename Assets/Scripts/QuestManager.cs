@@ -17,6 +17,10 @@ public class QuestManager : MonoBehaviour
     // Objetivo requerido (para que sea fácil de ajustar)
     public const int Gobblin_Blood_Target = 8;
 
+    [Header("Referencias Globales")]
+    // Arrastra el Transform de 'MineEntrance_InteriorSpawn' aquí.
+    public Transform MineInteriorSpawnPoint;
+
     [Header("Variables de la Misión del Ermitaño (Quest 2)")]
     // 0 = Inactiva (Misión no dada), 1 = Aceptada (Buscar Ermitaño), 2 = Encontrado/Hablado
     public int Estado_Quest_Ermitaño = 0; // <-- ¡NUEVA LÍNEA!
