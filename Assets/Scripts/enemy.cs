@@ -13,7 +13,7 @@ public struct EnemyStats
 }
 public class enemy : MonoBehaviour
 {
-    public enum EnemyType { None, Goblin, Knight, Minotaur }
+    public enum EnemyType { None, Goblin, Knight, Minotaur, Slime }
     [Header("Identificación")]
     // Hacemos esta variable pública para seleccionarla en el Inspector de Unity
     public EnemyType thisEnemyType = EnemyType.None;
@@ -27,7 +27,7 @@ public class enemy : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private float duracionFlash = 0.15f;
-    private Animator animator;
+   
     [Header("Configuración de Knockback")] // NUEVO
     public float knockbackForce = 10f;       // Fuerza del empuje
     public float knockbackDuration = 0.2f;  // Duración del aturdimiento
@@ -41,11 +41,9 @@ public class enemy : MonoBehaviour
 
     void Awake()
     {
-        // ... (otras inicializaciones) ...
-
         // Buscar el componente en el mismo objeto
         aiController = GetComponent<PatrolAndChaseAI>();
-        if (aiController == null)
+        if (aiController == null && name != "Slime")
         {
             Debug.LogError("Error: AI Controller no encontrado.");
         }
@@ -54,7 +52,6 @@ public class enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         LoadStats();
         vidaActual = vidaInicial;
