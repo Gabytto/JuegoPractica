@@ -10,20 +10,20 @@ public class QuestManager : MonoBehaviour
     [Header("Variables de la Misión del Sabio")]
     // 0 = Inactiva, 1 = Aceptada, 2 = Objetivo Cumplido, 3 = Entregada
     public int Estado_Quest_Sabio = 0;
-
     // Contador para el objetivo de la misión
     public int Gobblin_Blood_Count = 0;
-
-    // Objetivo requerido (para que sea fácil de ajustar)
+    // Objetivo requerido
     public const int Gobblin_Blood_Target = 8;
 
     [Header("Referencias Globales")]
-    // Arrastra el Transform de 'MineEntrance_InteriorSpawn' aquí.
     public Transform MineInteriorSpawnPoint;
 
     [Header("Variables de la Misión del Ermitaño (Quest 2)")]
     // 0 = Inactiva (Misión no dada), 1 = Aceptada (Buscar Ermitaño), 2 = Encontrado/Hablado
-    public int Estado_Quest_Ermitaño = 0; // <-- ¡NUEVA LÍNEA!
+    public int Estado_Quest_Ermitaño = 0;
+
+    [Header("Referencias de Obstáculos")]
+    public bloqueoCamino_1 BloqueoCamino1Ref;
 
     private void Awake()
     {
@@ -36,6 +36,21 @@ public class QuestManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    public void IniciarQuestSabio()
+    {
+        if (Estado_Quest_Sabio == 0)
+        {
+            Estado_Quest_Sabio = 1; // 1 = Misión Aceptada
+            Debug.Log("Misión del Sabio iniciada. Revisando bloqueos.");
+
+            // ** Desbloquear el camino 1 **
+            if (BloqueoCamino1Ref != null)
+            {
+                // Llama al método del bloqueo para desactivar el Collider 2D físico.
+                BloqueoCamino1Ref.ActualizarEstadoBloqueo();
+            }
         }
     }
 

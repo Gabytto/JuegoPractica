@@ -1,14 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SabioController : MonoBehaviour
 {
-    [Header("Configuración del Diálogo")]
-    public GameObject DialogoPanel;
-    public TextMeshProUGUI DialogoTexto;
-
     [Header("Indicador de Misión")]
     public GameObject IconoMision;
     public GameObject PanelInteraccion;
@@ -31,7 +26,6 @@ public class SabioController : MonoBehaviour
 
     void Start()
     {
-        if (DialogoPanel != null) DialogoPanel.SetActive(false);
         ActualizarIconoMision();
         ActualizarSpriteMina();
     }
@@ -46,13 +40,12 @@ public class SabioController : MonoBehaviour
 
     private void InteractuarConSabio()
     {
-        if (DialogoPanel.activeSelf)
+        if (dialogeManager.Instance.DialogoPanel.activeSelf)
         {
-            DialogoPanel.SetActive(false);
+            // Si está activo, lo cerramos y salimos
+            dialogeManager.Instance.CerrarPanel();
             return;
         }
-
-        DialogoPanel.SetActive(true);
         ManejarEstadosDeMision();
         ActualizarIconoMision();
     }
@@ -60,22 +53,25 @@ public class SabioController : MonoBehaviour
     private void ManejarEstadosDeMision()
     {
         int estado = QuestManager.Instance.Estado_Quest_Sabio;
+        string mensaje = "";
 
         switch (estado)
         {
             case 0:
-                DialogoTexto.text = "Hola joven Guerrero, hay una horda de Gobblins que se apoderó de la mina de oro. Acaba con ellos y tráeme 8 'Gobblin's Blood'.";
+                mensaje = "Hola joven Guerrero, hay una horda de Gobblins que se apoderó de la mina de oro. Acaba con ellos y tráeme 8 'Gobblin's Blood'.";
+
+                QuestManager.Instance.IniciarQuestSabio();
                 QuestManager.Instance.Estado_Quest_Sabio = 1;
                 break;
 
             case 1:
                 int recolectado = QuestManager.Instance.Gobblin_Blood_Count;
                 int requerido = QuestManager.Gobblin_Blood_Target;
-                DialogoTexto.text = $"Vuelve cuando tengas los 8 'Gobblin's blood'. Llevas {recolectado}/{requerido}.";
+                mensaje = $"Vuelve cuando tengas los 8 'Gobblin's blood'. Llevas {recolectado}/{requerido}.";
                 break;
 
             case 2:
-                DialogoTexto.text = "¡Excelente! Gracias a ti, nuestro reino ha recuperado el control de la mina.";
+                mensaje = "¡Excelente! Gracias a ti, nuestro reino ha recuperado el control de la mina.";
 
                 // Completar misión
                 QuestManager.Instance.Estado_Quest_Sabio = 3;
@@ -109,15 +105,17 @@ public class SabioController : MonoBehaviour
             case 3:
                 if (QuestManager.Instance.Estado_Quest_Ermitaño == 0)
                 {
-                    DialogoTexto.text = "Busca al viejo ermitaño dentro de la mina. Dile que vas de mi parte.";
+                    mensaje = "Busca al viejo ermitaño dentro de la mina. Dile que vas de mi parte.";
                     QuestManager.Instance.Estado_Quest_Ermitaño = 1;
                 }
                 else
                 {
-                    DialogoTexto.text = "El camino a través de la mina está abierto.";
+                    mensaje = "El camino a través de la mina está abierto.";
                 }
                 break;
         }
+
+        dialogeManager.Instance.MostrarMensaje(mensaje);
     }
 
     private void ActualizarIconoMision()
@@ -157,7 +155,7 @@ public class SabioController : MonoBehaviour
             jugadorCerca = false;
             if (PanelInteraccion != null) PanelInteraccion.SetActive(false);
             ActualizarIconoMision();
-            if (DialogoPanel != null) DialogoPanel.SetActive(false);
+            dialogeManager.Instance.CerrarPanel();
         }
     }
 }

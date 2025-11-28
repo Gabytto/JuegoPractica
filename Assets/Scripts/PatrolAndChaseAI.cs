@@ -15,18 +15,17 @@ public class PatrolAndChaseAI : MonoBehaviour
     public float pauseDuration = 2f;
     private bool isPaused = false;
     private Animator anim;
-    [HideInInspector] public bool isKnockedBack = false; // ¡NUEVO! Bandera pública para que el script de vida la pueda activar.
+    [HideInInspector] public bool isKnockedBack = false; // Bandera pública para que el script de vida la pueda activar.
 
-    public float patrolSpeed = 2.0f;     // Nueva: Velocidad de patrullaje
-    public float chaseSpeed = 3.5f;      // Nueva: Velocidad al perseguir al jugador
-    private float currentSpeedSetting;     // Mantendremos la velocidad actual aquí
+    public float patrolSpeed = 2.0f;     // Velocidad de patrullaje
+    public float chaseSpeed = 3.5f;      // Velocidad al perseguir al jugador
+    private float currentSpeedSetting;   // Mantendremos la velocidad actual aquí
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentTarget = pointA;
-        // Inicializar con la velocidad de patrullaje
         currentSpeedSetting = patrolSpeed;
     }
 
