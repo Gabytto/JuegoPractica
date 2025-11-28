@@ -19,11 +19,23 @@ public class QuestManager : MonoBehaviour
     public Transform MineInteriorSpawnPoint;
 
     [Header("Variables de la Misión del Ermitaño (Quest 2)")]
-    // 0 = Inactiva (Misión no dada), 1 = Aceptada (Buscar Ermitaño), 2 = Encontrado/Hablado
+    // 0 = Inactiva (Misión no dada), 1 = Aceptada (Buscar Ermitaño), 2 = Hablado y Completa.
     public int Estado_Quest_Ermitaño = 0;
+    // Contador para el objetivo de la misión
+    public int Blue_Slime_Fluid_Count = 0;
+    // Objetivo requerido (5 muestras)
+    public const int Blue_Slime_Fluid_Target = 5;
+
+    [Header("Variables de la Misión de Rescate (Quest 3)")]
+    // 0 = Inactiva (Misión no dada), 1 = Aceptada (Rescatar Aldeana), 2 = Aldeana Rescatada/Entregada
+    public int Estado_Quest_Rescate = 0;
 
     [Header("Referencias de Obstáculos")]
     public bloqueoCamino_1 BloqueoCamino1Ref;
+
+    [Header("Referencias de NPCs")]
+    // Referencia al Ermitaño para poder llamarlo
+    public ErmitanoController ErmitanoRef;
 
     private void Awake()
     {
@@ -71,5 +83,25 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
-   
+    public void AddBlueSlimeFluid()
+    {
+        // Solo aumentamos si estamos en la misión 1 del Ermitaño Y no hemos alcanzado el límite
+        if (Estado_Quest_Ermitaño == 1 && Blue_Slime_Fluid_Count < Blue_Slime_Fluid_Target)
+        {
+            Blue_Slime_Fluid_Count++;
+            Debug.Log("Blue Slime's fluid recolectado: " + Blue_Slime_Fluid_Count + " / " + Blue_Slime_Fluid_Target);
+
+            // La UI se actualiza automáticamente en QuestDisplayManager.Update() o...
+            // Si tienes una referencia directa a la UI en QuestManager:
+            // ActualizarUI_QuestErmitano(); 
+        }
+    }
+    public void ActualizarUI_QuestErmitano()
+    {
+        // Este método puede estar vacío si tu QuestDisplayManager usa el Update(), 
+        // pero es necesario que exista para que el código compile.
+        // El QuestDisplayManager hará el trabajo real.
+        Debug.Log("QuestManager: Actualizando UI para Misión del Ermitaño.");
+    }
+
 }

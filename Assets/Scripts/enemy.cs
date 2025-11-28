@@ -152,15 +152,30 @@ public class enemy : MonoBehaviour
         // LÓGICA DE LA MISIÓN: Llama al QuestManager para registrar la baja
         if (QuestManager.Instance != null)
         {
-            if(thisEnemyType == EnemyType.Goblin)
+            // --- Misión 1: Goblins (Sangre de Goblin) ---
+            if (thisEnemyType == EnemyType.Goblin)
             {
+                // Asumo que tienes un método AddGobblinKill() que llama a AddGobblinBlood()
                 QuestManager.Instance.AddGobblinKill();
-                // Muestra en consola que la muerte fue registrada (opcional para depuración)
-                Debug.Log("Quest: Gobblin eliminado y contador actualizado.");
+                Debug.Log("Quest: Gobblin eliminado y contador de Sangre de Goblin actualizado.");
             }
-            
+
+            // --- Misión 2: Slimes (Blue Slime's Fluid) ---
+            else if (thisEnemyType == EnemyType.Slime)
+            {
+                // Solo si la Misión del Ermitaño está activa (estado 1)
+                if (QuestManager.Instance.Estado_Quest_Ermitaño == 1)
+                {
+                    QuestManager.Instance.AddBlueSlimeFluid();
+                    Debug.Log("Quest: Slime eliminado y contador de Blue Slime's Fluid actualizado.");
+                }
+            }
+
         }
 
+        // Aquí iría la lógica de dropear ítems, reproducir efectos de muerte, etc.
+
+        // Desactiva el objeto del enemigo para "eliminarlo" de la escena
         gameObject.SetActive(false);
     }
 

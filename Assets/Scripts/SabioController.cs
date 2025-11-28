@@ -107,6 +107,11 @@ public class SabioController : MonoBehaviour
                 {
                     mensaje = "Busca al viejo ermitaño dentro de la mina. Dile que vas de mi parte.";
                     QuestManager.Instance.Estado_Quest_Ermitaño = 1;
+                    ErmitanoController ermitano = QuestManager.Instance.ErmitanoRef; // Asumiendo que añades esta referencia al QuestManager
+                    if (ermitano != null)
+                    {
+                        ermitano.ForzarActualizacion();
+                    }
                 }
                 else
                 {
