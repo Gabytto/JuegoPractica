@@ -43,7 +43,7 @@ public class enemy : MonoBehaviour
     {
         // Buscar el componente en el mismo objeto
         aiController = GetComponent<PatrolAndChaseAI>();
-        if (aiController == null && name != "Slime")
+        if (aiController == null)
         {
             Debug.LogError("Error: AI Controller no encontrado.");
         }

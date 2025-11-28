@@ -128,14 +128,6 @@ MonoBehaviour:
     health: 100
     damage: 20
     patrolSpeed: 1.5
-  - type: 2
-    health: 200
-    damage: 50
-    patrolSpeed: 2.5
-  - type: 3
-    health: 500
-    damage: 100
-    patrolSpeed: 2.5
   damageDealt: 0
   vidaActual: 0
   knockbackForce: 10
