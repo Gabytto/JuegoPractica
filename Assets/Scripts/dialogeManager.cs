@@ -12,13 +12,15 @@ public class dialogeManager : MonoBehaviour
     public GameObject DialogoPanel;
     public TextMeshProUGUI DialogoTexto;
 
+    private Queue<string> colaDeMensajes = new Queue<string>();
+    public bool DialogoActivo { get { return DialogoPanel != null && DialogoPanel.activeSelf; } }
+    private SabioController scriptDeAvance = null; // Referencia del emisor
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            // No es necesario DontDestroyOnLoad si es un objeto que vive solo en la escena.
-            // Si el panel de diálogo persiste entre escenas, sí lo necesitarías.
         }
         else
         {
@@ -28,39 +30,81 @@ public class dialogeManager : MonoBehaviour
 
     void Start()
     {
-        // Aseguramos que el panel esté inicialmente desactivado
         if (DialogoPanel != null)
         {
             DialogoPanel.SetActive(false);
         }
     }
 
-    // Método CLAVE: Para que CUALQUIER script muestre un mensaje
-    public void MostrarMensaje(string texto)
+    // Función para iniciar un diálogo con múltiples frases y recibir la referencia del emisor
+    public void MostrarMultiMensaje(string[] mensajes, SabioController emisor = null)
+    {
+        if (DialogoActivo) return;
+
+        colaDeMensajes.Clear();
+        this.scriptDeAvance = emisor;
+
+        foreach (string mensaje in mensajes)
+        {
+            colaDeMensajes.Enqueue(mensaje);
+        }
+
+        AvanzarDialogo();
+    }
+
+    // Función llamada al pulsar la tecla 'E'
+    public void AvanzarDialogo()
     {
         if (DialogoPanel == null || DialogoTexto == null)
         {
-            Debug.LogError("Panel o Texto del Diálogo no asignados en el DialogueManager.");
+            Debug.LogError("Panel o Texto del Diálogo no asignados.");
             return;
         }
 
-        // 1. Establece el texto
-        DialogoTexto.text = texto;
-
-        // 2. Activa el panel (si no está activo)
-        if (!DialogoPanel.activeSelf)
+        if (colaDeMensajes.Count > 0)
         {
-            DialogoPanel.SetActive(true);
+            // Hay más mensajes
+            string mensajeActual = colaDeMensajes.Dequeue();
+            DialogoTexto.text = mensajeActual;
+
+            if (!DialogoPanel.activeSelf)
+            {
+                DialogoPanel.SetActive(true);
+            }
+        }
+        else
+        {
+            // Cola vacía: Es el final del diálogo.
+
+            // 1. ¡CORRECCIÓN! Notificar al Sabio ANTES de cerrar el panel
+            if (scriptDeAvance != null)
+            {
+                scriptDeAvance.FinalizarDialogoCritico();
+            }
+
+            // 2. Cerrar el panel (esto limpiará la referencia 'scriptDeAvance' internamente)
+            CerrarPanel();
         }
     }
 
-    // Método para cerrar el panel (útil para interacciones del jugador)
+    public void MostrarMensaje(string texto)
+    {
+        MostrarMultiMensaje(new string[] { texto });
+    }
+
+    // Método para cerrar el panel
     public void CerrarPanel()
     {
         if (DialogoPanel != null && DialogoPanel.activeSelf)
         {
             DialogoPanel.SetActive(false);
+            colaDeMensajes.Clear();
+
+            // Limpiamos la referencia del Sabio (para evitar el avance si se cierra por salir del área)
+            if (scriptDeAvance != null)
+            {
+                scriptDeAvance = null;
+            }
         }
     }
 }
-
