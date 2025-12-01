@@ -14,7 +14,7 @@ public class dialogeManager : MonoBehaviour
 
     private Queue<string> colaDeMensajes = new Queue<string>();
     public bool DialogoActivo { get { return DialogoPanel != null && DialogoPanel.activeSelf; } }
-    private SabioController scriptDeAvance = null; // Referencia del emisor
+    private IDialogoCritico scriptDeAvance = null;
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class dialogeManager : MonoBehaviour
     }
 
     // Función para iniciar un diálogo con múltiples frases y recibir la referencia del emisor
-    public void MostrarMultiMensaje(string[] mensajes, SabioController emisor = null)
+    public void MostrarMultiMensaje(string[] mensajes, IDialogoCritico emisor = null)
     {
         if (DialogoActivo) return;
 

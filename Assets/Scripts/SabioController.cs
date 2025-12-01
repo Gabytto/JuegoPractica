@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SabioController : MonoBehaviour
+public class SabioController : MonoBehaviour, IDialogoCritico
 {
     [Header("Indicador de Misión")]
     public GameObject IconoMision;
