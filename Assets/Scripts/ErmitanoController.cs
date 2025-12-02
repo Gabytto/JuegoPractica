@@ -115,6 +115,11 @@ public class ErmitanoController : MonoBehaviour, IDialogoCritico
             // 2. Iniciar Misión 3 (rescate de la aldeana)
             QuestManager.Instance.Estado_Quest_Rescate = 1;
 
+            if (QuestManager.Instance.BloqueoCamino2Ref != null)
+            {
+                QuestManager.Instance.BloqueoCamino2Ref.ActualizarEstadoBloqueo();
+            }
+
             // 3. Actualizar la interfaz (Quest UI) y el ícono
             ActualizarIconoMision();
             QuestManager.Instance.ActualizarUI_QuestErmitano();

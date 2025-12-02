@@ -120,7 +120,7 @@ public class QuestDisplayManager : MonoBehaviour
             if (count < target)
             {
                 // Estado Inicial: El texto que solicitaste
-                instruccion = "Derrota a los Slimes mientras recorres el laberinto de la mina buscando al Ermitaño (Blue Slime's Fluid).";
+                instruccion = "Derrota a los Slimes mientras recorres el laberinto de la mina buscando al Ermitaño (Fluido de Slime Azul).";
             }
             else
             {

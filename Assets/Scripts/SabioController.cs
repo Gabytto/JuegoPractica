@@ -90,7 +90,7 @@ public class SabioController : MonoBehaviour, IDialogoCritico
             case 2:
                 // Diálogo de entrega/completado de misión
                 mensajes = new string[] {
-                    "¡Excelente! Sabía que esos Gobblins no serían problema para tí. Pero ahora debo pedirte otro favor.",
+                    "¡Excelente! Sabía que esos Gobblins no serían un problema para tí. Pero ahora debo pedirte otro favor.",
                 };
 
                 // Marcamos que el estado debe cambiar a 3 al terminar el diálogo

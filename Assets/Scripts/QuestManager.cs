@@ -32,6 +32,7 @@ public class QuestManager : MonoBehaviour
 
     [Header("Referencias de Obstáculos")]
     public bloqueoCamino_1 BloqueoCamino1Ref;
+    public bloqueoCamino_2 BloqueoCamino2Ref;
 
     [Header("Referencias de NPCs")]
     // Referencia al Ermitaño para poder llamarlo
@@ -89,7 +90,7 @@ public class QuestManager : MonoBehaviour
         if (Estado_Quest_Ermitaño == 1 && Blue_Slime_Fluid_Count < Blue_Slime_Fluid_Target)
         {
             Blue_Slime_Fluid_Count++;
-            Debug.Log("Blue Slime's fluid recolectado: " + Blue_Slime_Fluid_Count + " / " + Blue_Slime_Fluid_Target);
+            Debug.Log("Fluido de Slime Azul recolectado: " + Blue_Slime_Fluid_Count + " / " + Blue_Slime_Fluid_Target);
 
             // La UI se actualiza automáticamente en QuestDisplayManager.Update() o...
             // Si tienes una referencia directa a la UI en QuestManager:
