@@ -22,7 +22,7 @@ public class MinePortal : MonoBehaviour
 
     private void TeleportPlayer(GameObject playerToTeleport)
     {
-        // 🚨 CAMBIO CLAVE: Usa la referencia del QuestManager
+        // Usa la referencia del QuestManager
         Transform destino = QuestManager.Instance.MineInteriorSpawnPoint;
 
         if (destino != null)

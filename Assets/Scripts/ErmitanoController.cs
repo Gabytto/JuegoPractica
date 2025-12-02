@@ -11,6 +11,9 @@ public class ErmitanoController : MonoBehaviour, IDialogoCritico
     public KeyCode TeclaInteraccion = KeyCode.E;
     private bool jugadorCerca = false;
 
+    [Header("Teleport de Salida de Mina")]
+    public GameObject TeleportSalidaMina;
+
     void Start()
     {
         ActualizarIconoMision();
@@ -114,6 +117,11 @@ public class ErmitanoController : MonoBehaviour, IDialogoCritico
 
             // 2. Iniciar Misión 3 (rescate de la aldeana)
             QuestManager.Instance.Estado_Quest_Rescate = 1;
+            if (TeleportSalidaMina != null)
+            {
+                TeleportSalidaMina.SetActive(true); // ¡Activamos el objeto en escena!
+                Debug.Log("Teleport de Salida de Mina Activado.");
+            }
 
             if (QuestManager.Instance.BloqueoCamino2Ref != null)
             {
