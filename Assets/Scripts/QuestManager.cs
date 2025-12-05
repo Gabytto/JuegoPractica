@@ -29,6 +29,8 @@ public class QuestManager : MonoBehaviour
     [Header("Variables de la Misión de Rescate (Quest 3)")]
     // 0 = Inactiva (Misión no dada), 1 = Aceptada (Rescatar Aldeana), 2 = Aldeana Rescatada/Entregada
     public int Estado_Quest_Rescate = 0;
+    public int Knight_Kill_Count = 0;
+    public const int Knight_Kill_Target = 4;
 
     [Header("Referencias de Obstáculos")]
     public bloqueoCamino_1 BloqueoCamino1Ref;
@@ -103,6 +105,24 @@ public class QuestManager : MonoBehaviour
         // pero es necesario que exista para que el código compile.
         // El QuestDisplayManager hará el trabajo real.
         Debug.Log("QuestManager: Actualizando UI para Misión del Ermitaño.");
+    }
+    public void AddKnightKill()
+    {
+        // Solo aumentar si la misión está en estado 1 (Rescate Aceptada)
+        if (Estado_Quest_Rescate == 1)
+        {
+            Knight_Kill_Count++;
+            Debug.Log("Knight derrotado: " + Knight_Kill_Count + " / " + Knight_Kill_Target);
+
+            // Verificar si el objetivo de los Knights se ha cumplido
+            if (Knight_Kill_Count >= Knight_Kill_Target)
+            {
+                // Opcional: Si tienes más sub-pasos antes de ver a la aldeana,
+                // podrías cambiar a un sub-estado intermedio (por ejemplo, Estado_Quest_Rescate = 1.5).
+                // Por ahora, solo completamos el contador del objetivo.
+                Debug.Log("¡Objetivo de Knights cumplido! Ahora, entra en la mina de oro y busca a la aldeana.");
+            }
+        }
     }
 
 }

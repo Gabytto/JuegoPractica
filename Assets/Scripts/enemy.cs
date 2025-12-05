@@ -170,6 +170,17 @@ public class enemy : MonoBehaviour
                     Debug.Log("Quest: Slime eliminado y contador de Blue Slime's Fluid actualizado.");
                 }
             }
+            // --- Misión 3: Knights (Rescate de Aldeana) ---
+            else if (thisEnemyType == EnemyType.Knight)
+            {
+                // Solo si la Misión de Rescate está activa (Estado 1)
+                // (El QuestManager ya se encarga de verificar el contador)
+                if (QuestManager.Instance.Estado_Quest_Rescate == 1)
+                {
+                    QuestManager.Instance.AddKnightKill();
+                    Debug.Log("Quest: Knight eliminado. Contador de Misión de Rescate actualizado.");
+                }
+            }
 
         }
 
@@ -179,7 +190,6 @@ public class enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    //PRUEBA
     private void FlipSprite()
     {
         if (rb.velocity.x < 0 && !giroIzq)

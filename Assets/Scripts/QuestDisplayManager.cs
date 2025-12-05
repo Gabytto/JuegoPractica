@@ -23,8 +23,12 @@ public class QuestDisplayManager : MonoBehaviour
     [Header("Recursos de la Misión del Sabio (Quest 1)")]
     // Sprite del ítem requerido para la misión
     public Sprite goblinBloodSprite;
+    [Header("Recursos de la Misión del ermitaño (Quest 2)")]
     // Sprite del ítem requerido para la misión 2
     public Sprite blueSlimeFluidSprite;
+    [Header("Recursos de la Misión de Rescate (Quest 3)")]
+    // Sprite del enemigo a derrotar requerido para la misión 3
+    public Sprite knightKillSprite;
 
     void Start()
     {
@@ -60,6 +64,11 @@ public class QuestDisplayManager : MonoBehaviour
         else if (QuestManager.Instance.Estado_Quest_Sabio == 3 && QuestManager.Instance.Estado_Quest_Ermitaño <= 1)
         {
             ManejarMisionErmitano();
+        }
+
+        else if (QuestManager.Instance.Estado_Quest_Rescate <= 2)
+        {
+            ManejarMisionRescate();
         }
         // Caso por defecto: Ocultar Panel si ambas están en estado final (Sabio=3, Ermitaño=2+)
         else
@@ -131,6 +140,50 @@ public class QuestDisplayManager : MonoBehaviour
             InstruccionesTexto.text = instruccion;
         }
         else
+        {
+            if (QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
+        }
+
+        
+    }
+    private void ManejarMisionRescate()
+    {
+        int estado = QuestManager.Instance.Estado_Quest_Rescate;
+        int count = QuestManager.Instance.Knight_Kill_Count;
+        int target = QuestManager.Knight_Kill_Target;
+
+        // Solo mostramos si el estado es 1 (en curso) o 2 (listo para interactuar)
+        if (estado == 1 || estado == 2)
+        {
+            if (!QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(true);
+
+            // 1. Icono y Contador
+            ItemIcon.sprite = knightKillSprite; // Usamos el sprite que ya referenciaste
+            CantidadTexto.text = $"{count} / {target}";
+
+            string instruccion;
+
+            if (count < target)
+            {
+                // Estado 1a: Faltan Knights por derrotar
+                instruccion = $"Objetivo: Derrota a los {target} Caballeros Negros que custodian la entrada a la mina 2.";
+            }
+            else
+            {
+                // Estado 1b: Knights derrotados, listos para entrar y rescatar (o estado 2)
+                instruccion = "¡Camino despejado! Entra en la mina para rescatar a la Aldeana.";
+
+                // Si el estado es 2 (Aldeana ya rescatada/interactuamos), el texto puede ser más simple
+                if (estado == 2)
+                {
+                    instruccion = "Regresa al pueblo. ¡La Aldeana ha sido rescatada!";
+                }
+            }
+
+            // 2. Instrucciones
+            InstruccionesTexto.text = instruccion;
+        }
+        else // Estado 0 (inactiva) o 3 (entregada totalmente al Sabio, si existiera)
         {
             if (QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
         }
