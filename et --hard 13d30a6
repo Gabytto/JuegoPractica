@@ -1,0 +1,69 @@
+[33mea20047[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge branch 'main' of https://github.com/Gabytto/JuegoPractica
+[33m4ae613c[m pantalla de fallaste ok
+[33m13d30a6[m Quest rescate de aldeana funcionando y te envia a creditos
+[33m8571819[m avanzando con la quest 3
+[33m6dd6131[m Aldeana creada, minotauro corregido
+[33m5775dba[m retoques
+[33md0949e7[m musica en menu principal, ahora boton controles abre y cierra controles. Sonido de abrir controles.
+[33m9805952[m Laberinto mina 2 terminado con colisiones
+[33mdc0cf08[m base mina 2 creado
+[33ma28f64e[m teleport generico para salir de las minas funciona
+[33m34c04fe[m bloqueo 2 funcionando.
+[33m4005660[m Dialogos del ermitano mejorados y multiples
+[33m1ae4b36[m panel de dialogo mejorado con mensajes multiples. historia mejorada
+[33m4024ccb[m mision 2 funciona
+[33me4e9ffd[m se separo la logica del dialogo para separarle del script del sabio. se bloqueo la salida del pueblo si no se pide quest.
+[33m96fde63[m slimes usa patrollAndChase. eliminamos el navagent
+[33maa57b9d[m retoques ui
+[33mbdeb4a8[m Menu inicial mejorado y con titulo
+[33mef7a6d5[m Menu con botones funcionales. comenzar, mostrar y ocultar botones y salir
+[33m8551593[m Menu principal creado con 3 botones y fondo
+[33m8fcbcaf[m Enemigo Slime dentro de mina 1 funcionando con Navmesh
+[33m53d6f55[m funciona el teleport al interior de la mina de oro 1!!!
+[33me3c2ec2[m no anda el teleport
+[33m0511417[m creacion y animacion de npc 2 ermitaño y quest 2 a medio armar
+[33mc23a081[m creacion y animacion de npc 2 aldeana
+[33mef1ffdd[m laberinto mina 1
+[33m626f31d[m mejor icono de quest
+[33m3fe6c37[m diseño del nivel mejorado
+[33m94c6236[m Minotaur configurado y con animaciones, solo falta que haga daño
+[33m3b9d66b[m se mejoro todo el fondo para que no se vean zonas que no tienen nada
+[33m0e36a36[m Enemigos diferenciados por tipo, mision 1 solo suma con muerte de gobblins, knight animados
+[33mbbaf78e[m empujar enemigos al golpearlos
+[33mcad3631[m empujar enemigos al golpearlos
+[33me3db842[m mensaje "Presiona E para hablar..."
+[33m1740eef[m Dialogo con sabio mejorado
+[33m27f12b0[m Panel de quest creado y funcionando con quest1
+[33m904fb1e[m Mision 1 funciona, se activa la mina.
+[33mc21b9ee[m Mision 1 funciona, se activa la mina.
+[33m5b1ba7b[m implementado questmanager y modificado script de gobblin para primer mision
+[33mc6bba63[m NPC sabio creado, quest_symbol creado y animado
+[33mccc3b7d[m persecucion al player mas rapida que patrullaje
+[33ma5450f3[m los gobblins ahora pasan de anim iddle a walk
+[33m09e941d[m patrullaje tiene pausas al llegar a los puntos de control
+[33m855fff4[m los gobblins ya no atraviesan paredes
+[33m387b4a6[m los goblin hacen animacion de caminar y dan la vuelta
+[33m296a8fa[m animacion de gobblin walk creada
+[33m2984b2c[m barra de vida funcionando ok
+[33m67ea77b[m patrullamiento
+[33mee8663c[m Minotauro iddle agregado
+[33m1bce94f[m agregue spritesheet minotauro
+[33m077a3dd[m goblins animados, nuevo enemigo knight animado, rojo al recibir daño, nueva zona enemigos 2, arboles con animacion
+[33m9d3c48c[m 1° campamento enemigo, coliciones, decoracion mapa, goblins, golpeo a ambos lados
+[33m2686243[m primer mapa
+[33m95b44a7[m (creacion del nivel)
+[33m0522791[m animaciones iddle, run, attack ok! camara con cinemachine ok. Flip ok
+[33md001299[m reemplazo de maga por warrior para avanzar con animaciones
+[33m5c856c4[m animacion iddle
+[33m8795e5f[m cambio de personaje pink 2.0
+[33mc83323d[m Actualizacion de lazer
+[33m5c4e990[m reemplace guerrero por pink, animacion iddle, cd lasser
+[33m40b62cd[m muerte del enemigo, recibe daño de laser
+[33mb883622[m propiedades laser en script laser
+[33meefaf2e[m prefabs, laser, disparar
+[33m85e8f99[m temine de trabajar
+[33m98c5f67[m Pociones, consumir pocion, recibir daño
+[33mc69764d[m sprites, terreno con elevación, rio, coliders
+[33m593ee45[m pick ups, colision con enemigo
+[33mbd78820[m movimiento, sprint, rage
+[33m69a4383[m Initial commit
