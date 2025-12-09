@@ -155,7 +155,6 @@ public class enemy : MonoBehaviour
             // --- Misión 1: Goblins (Sangre de Goblin) ---
             if (thisEnemyType == EnemyType.Goblin)
             {
-                // Asumo que tienes un método AddGobblinKill() que llama a AddGobblinBlood()
                 QuestManager.Instance.AddGobblinKill();
                 Debug.Log("Quest: Gobblin eliminado y contador de Sangre de Goblin actualizado.");
             }
@@ -170,15 +169,26 @@ public class enemy : MonoBehaviour
                     Debug.Log("Quest: Slime eliminado y contador de Blue Slime's Fluid actualizado.");
                 }
             }
+
             // --- Misión 3: Knights (Rescate de Aldeana) ---
             else if (thisEnemyType == EnemyType.Knight)
             {
                 // Solo si la Misión de Rescate está activa (Estado 1)
-                // (El QuestManager ya se encarga de verificar el contador)
                 if (QuestManager.Instance.Estado_Quest_Rescate == 1)
                 {
                     QuestManager.Instance.AddKnightKill();
                     Debug.Log("Quest: Knight eliminado. Contador de Misión de Rescate actualizado.");
+                }
+            }
+            // --- NUEVA LÓGICA: Minotauro (Llave del Calabozo) ---
+            else if (thisEnemyType == EnemyType.Minotaur)
+            {
+                // Solo si la Misión de Rescate está activa (Estado 1)
+                if (QuestManager.Instance.Estado_Quest_Rescate == 1)
+                {
+                    // Este método se encarga de aumentar el contador (Key_Calabozo_Count)
+                    QuestManager.Instance.AddKeyCalabozo();
+                    Debug.Log("Quest: Minotauro derrotado. Llave del Calabozo obtenida.");
                 }
             }
 

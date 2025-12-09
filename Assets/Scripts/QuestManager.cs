@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
@@ -31,6 +33,19 @@ public class QuestManager : MonoBehaviour
     public int Estado_Quest_Rescate = 0;
     public int Knight_Kill_Count = 0;
     public const int Knight_Kill_Target = 4;
+
+    [Header("UI de Misión (Panel)")] // ¡NUEVO HEADER!
+    public TextMeshProUGUI MissionTitleText;        // Componente de texto para el título/descripción
+    public Image MissionIconImage;         // Componente de imagen para el ícono
+    public Sprite AldeanaIconSprite;       // Sprite de la Aldeana para el panel
+
+    [Header("Referencias de la Mina de Rescate")] 
+    public SpriteRenderer MinaRescateSpriteRenderer; // Para cambiar la imagen
+    public Sprite MinaRescateActivadaSprite;        // El nuevo sprite "activado"
+    public Collider2D MinaRescateTriggerCollider;    // El BoxCollider2D que actúa como teleport trigger
+
+    public int Key_Calabozo_Count = 0;
+    public const int Key_Calabozo_Target = 1;
 
     [Header("Referencias de Obstáculos")]
     public bloqueoCamino_1 BloqueoCamino1Ref;
@@ -99,6 +114,21 @@ public class QuestManager : MonoBehaviour
             // ActualizarUI_QuestErmitano(); 
         }
     }
+    public void AddKeyCalabozo()
+    {
+        // Solo se obtiene la llave si la misión de Rescate está ACEPTADA (Estado 1)
+        if (Estado_Quest_Rescate == 1 && Key_Calabozo_Count < Key_Calabozo_Target)
+        {
+            Key_Calabozo_Count++;
+            Debug.Log("Haz conseguido la llave del calabozo.");
+
+            // Opcional: Podrías cambiar el estado aquí si quieres que el jugador sepa que ya puede ir a ver a la aldeana
+            // if (Key_Calabozo_Count >= Key_Calabozo_Target)
+            // {
+            //     Estado_Quest_Rescate = 1.5; // O algún estado intermedio
+            // }
+        }
+    }
     public void ActualizarUI_QuestErmitano()
     {
         // Este método puede estar vacío si tu QuestDisplayManager usa el Update(), 
@@ -117,12 +147,38 @@ public class QuestManager : MonoBehaviour
             // Verificar si el objetivo de los Knights se ha cumplido
             if (Knight_Kill_Count >= Knight_Kill_Target)
             {
-                // Opcional: Si tienes más sub-pasos antes de ver a la aldeana,
-                // podrías cambiar a un sub-estado intermedio (por ejemplo, Estado_Quest_Rescate = 1.5).
-                // Por ahora, solo completamos el contador del objetivo.
-                Debug.Log("¡Objetivo de Knights cumplido! Ahora, entra en la mina de oro y busca a la aldeana.");
+                // 1. Cambiar el estado de la misión: Objetivo cumplido
+                Estado_Quest_Rescate = 1; // Mantenemos en 1 si el siguiente paso es la llave,
+                                          // o podríamos usar 1.5/2 si es el último requisito. 
+                                          // Por ahora, lo mantenemos en 1.
+
+                Debug.Log("¡Objetivo de Knights cumplido! La Mina de Rescate se ha activado.");
+
+                // 2. LÓGICA DE ACTIVACIÓN DE LA MINA
+                if (MinaRescateSpriteRenderer != null && MinaRescateActivadaSprite != null)
+                {
+                    // Cambiar el sprite de la mina
+                    MinaRescateSpriteRenderer.sprite = MinaRescateActivadaSprite;
+                }
+                if (MinaRescateTriggerCollider != null)
+                {
+                    // Activar el Box Collider 2D que teletransporta (debe ser Is Trigger = true)
+                    MinaRescateTriggerCollider.enabled = true;
+                }
+                // 3. LÓGICA DE ACTUALIZACIÓN DEL PANEL DE MISIÓN (NUEVO)
+                if (MissionTitleText != null)
+                {
+                    MissionTitleText.text = "Busca a la aldeana en el interior de la mina";
+                }
+
+                if (MissionIconImage != null && AldeanaIconSprite != null)
+                {
+                    Debug.Log("DEBUG: Icono de Mision cambiado a: " + AldeanaIconSprite.name); // Opcional, solo para confirmar la ejecución
+                }
             }
         }
+
     }
+    
 
 }

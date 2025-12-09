@@ -158,7 +158,19 @@ public class QuestDisplayManager : MonoBehaviour
             if (!QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(true);
 
             // 1. Icono y Contador
-            ItemIcon.sprite = knightKillSprite; // Usamos el sprite que ya referenciaste
+            // *** LÓGICA DE CAMBIO DE ICONO ***
+            if (count < target)
+            {
+                // Objetivo aún no cumplido: Mostrar el Knight
+                ItemIcon.sprite = knightKillSprite;
+            }
+            else // count >= target (Objetivo de kills cumplido)
+            {
+                // Objetivo de kills cumplido: Mostrar a la Aldeana (siguiente objetivo)
+                ItemIcon.sprite = QuestManager.Instance.AldeanaIconSprite; // Usamos la referencia del QM
+            }
+            // *** FIN LÓGICA DE CAMBIO DE ICONO ***
+
             CantidadTexto.text = $"{count} / {target}";
 
             string instruccion;
