@@ -41,6 +41,8 @@ public class movimiento : MonoBehaviour
     [SerializeField] GameObject laser;
     [SerializeField] private cooldownTimer coolDownTimer;
 
+    [SerializeField] private ManagerEscenas managerEscenas;
+
 
 
     void Start()
@@ -152,11 +154,26 @@ public class movimiento : MonoBehaviour
 
         Debug.Log("Auch!!!");
         Debug.Log("Tu vida actual es " + vidaActual);
+
+        // --- LÓGICA DE MUERTE AGREGADA ---
         if (vidaActual <= 0)
         {
-            gameObject.SetActive(false);
-            Debug.Log("Te has muerto.");
+            // Detener el movimiento y cualquier otra acción (opcional)
+            rb.velocity = Vector2.zero;
+
+            // Llamar a la función del ManagerEscenas para cambiar a la escena de Game Over
+            if (managerEscenas != null)
+            {
+                managerEscenas.CambiarEscena("fallaste");
+                gameObject.SetActive(false); // Opcional: Desactivar el personaje mientras carga la escena
+            }
+            else
+            {
+                Debug.LogError("ERROR: ManagerEscenas no asignado en el Inspector de Movimiento.cs");
+                gameObject.SetActive(false);
+            }
         }
+        // ---------------------------------
     }
     private void RecibirCuracion()
     {
