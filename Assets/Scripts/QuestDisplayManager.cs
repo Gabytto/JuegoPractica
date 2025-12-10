@@ -10,7 +10,7 @@ public class QuestDisplayManager : MonoBehaviour
     // Referencia al panel principal para activar/desactivar
     public GameObject QuestPanelGameObject;
 
-    [Header("Referencias de la UI")]
+    [Header("Referencias de la UI General")]
     // 1. ItemIcon: Imagen del item necesario para completar la quest
     public Image ItemIcon;
 
@@ -23,12 +23,17 @@ public class QuestDisplayManager : MonoBehaviour
     [Header("Recursos de la Misión del Sabio (Quest 1)")]
     // Sprite del ítem requerido para la misión
     public Sprite goblinBloodSprite;
-    [Header("Recursos de la Misión del ermitaño (Quest 2)")]
+
+    [Header("Recursos de la Misión del Ermitaño (Quest 2)")]
     // Sprite del ítem requerido para la misión 2
     public Sprite blueSlimeFluidSprite;
+
     [Header("Recursos de la Misión de Rescate (Quest 3)")]
-    // Sprite del enemigo a derrotar requerido para la misión 3
+    // Sprite del enemigo a derrotar requerido para la misión 3 (Knight)
     public Sprite knightKillSprite;
+
+    [Header("Recursos de la Misión de Rescate (Minotauro)")]
+    public Sprite MinotaurSprite; // <-- ¡Ya está declarada correctamente!
 
     void Start()
     {
@@ -55,27 +60,35 @@ public class QuestDisplayManager : MonoBehaviour
 
     private void UpdateQuestDisplay()
     {
-        // Prioridad 1: Misión del Sabio
-        if (QuestManager.Instance.Estado_Quest_Sabio <= 2)
+        // El orden de prioridad debe estar alineado con la progresión del juego.
+        // Asumo que la Misión de Rescate (Quest 3) tiene mayor prioridad de visualización
+        // que la del Sabio (Quest 1) o la del Ermitaño (Quest 2), o que se activa en un punto
+        // donde las otras ya están cumplidas.
+
+        // Reajustando el orden de prioridad:
+
+        // 1. Misión de Rescate (Si está activa)
+        if (QuestManager.Instance.Estado_Quest_Rescate >= 1 && QuestManager.Instance.Estado_Quest_Rescate <= 11)
+        {
+            ManejarMisionRescate();
+        }
+        // 2. Misión del Sabio (Si está activa y no hay Rescate)
+        else if (QuestManager.Instance.Estado_Quest_Sabio <= 2)
         {
             ManejarMisionSabio();
         }
-        // Prioridad 2: Misión del Ermitaño (Solo se activa si la del Sabio está completada/entregada)
+        // 3. Misión del Ermitaño (Si la del Sabio se entregó y esta está activa)
         else if (QuestManager.Instance.Estado_Quest_Sabio == 3 && QuestManager.Instance.Estado_Quest_Ermitaño <= 1)
         {
             ManejarMisionErmitano();
         }
-
-        else if (QuestManager.Instance.Estado_Quest_Rescate <= 2)
-        {
-            ManejarMisionRescate();
-        }
-        // Caso por defecto: Ocultar Panel si ambas están en estado final (Sabio=3, Ermitaño=2+)
+        // Caso por defecto: Ocultar Panel
         else
         {
             if (QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
         }
     }
+
     private void ManejarMisionSabio()
     {
         int estado = QuestManager.Instance.Estado_Quest_Sabio;
@@ -109,6 +122,7 @@ public class QuestDisplayManager : MonoBehaviour
                 break;
         }
     }
+
     private void ManejarMisionErmitano()
     {
         int estado = QuestManager.Instance.Estado_Quest_Ermitaño;
@@ -143,59 +157,54 @@ public class QuestDisplayManager : MonoBehaviour
         {
             if (QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
         }
-
-        
     }
+
+    // *** FUNCIÓN CLAVE CORREGIDA ***
     private void ManejarMisionRescate()
     {
         int estado = QuestManager.Instance.Estado_Quest_Rescate;
         int count = QuestManager.Instance.Knight_Kill_Count;
-        int target = QuestManager.Knight_Kill_Target;
+        int target = QuestManager.Knight_Kill_Target; // Target de Knights
 
-        // Solo mostramos si el estado es 1 (en curso) o 2 (listo para interactuar)
-        if (estado == 1 || estado == 2)
+        // Solo mostramos si el estado es 1 (Knights), 10 (Minotauro), 11 (Llave), o 2 (Rescatada)
+        if (estado == 1 || estado == 10 || estado == 11 || estado == 2)
         {
             if (!QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(true);
 
-            // 1. Icono y Contador
-            // *** LÓGICA DE CAMBIO DE ICONO ***
-            if (count < target)
+            // 1. Lógica del Contador, Icono e Instrucciones
+            switch (estado)
             {
-                // Objetivo aún no cumplido: Mostrar el Knight
-                ItemIcon.sprite = knightKillSprite;
+                case 1: // Misión Aceptada: Matar Knights
+                    ItemIcon.sprite = knightKillSprite;
+                    CantidadTexto.text = $"{count} / {target}";
+                    InstruccionesTexto.text = $"Objetivo: Derrota a los {target} Caballeros Negros que custodian la entrada a la mina 2.";
+                    break;
+
+                case 10: // Knights Derrotados: Matar Minotauro para obtener la llave
+                    int keyCount = QuestManager.Instance.Key_Calabozo_Count;
+                    int keyTarget = QuestManager.Key_Calabozo_Target;
+
+                    // Usar el sprite del Minotauro si está asignado, si no, usa el de la Aldeana (por seguridad)
+                    ItemIcon.sprite = MinotaurSprite != null ? MinotaurSprite : QuestManager.Instance.AldeanaIconSprite;
+
+                    CantidadTexto.text = $"{keyCount} / {keyTarget}";
+                    InstruccionesTexto.text = "¡Camino despejado! Entra en la mina. Derrota al Minotauro para obtener la llave del calabozo.";
+                    break;
+
+                case 11: // Llave Obtenida: Buscar Aldeana
+                    ItemIcon.sprite = QuestManager.Instance.AldeanaIconSprite; // Mostrar ícono de la aldeana
+                    CantidadTexto.text = "1 / 1"; // Llave obtenida
+                    InstruccionesTexto.text = "¡Tienes la llave! Busca y libera a la Aldeana que está encerrada en el calabozo.";
+                    break;
+
+                case 2: // Aldeana Rescatada
+                    ItemIcon.sprite = QuestManager.Instance.AldeanaIconSprite;
+                    CantidadTexto.text = "¡Rescatada!";
+                    InstruccionesTexto.text = "Regresa al pueblo. ¡La Aldeana ha sido rescatada!";
+                    break;
             }
-            else // count >= target (Objetivo de kills cumplido)
-            {
-                // Objetivo de kills cumplido: Mostrar a la Aldeana (siguiente objetivo)
-                ItemIcon.sprite = QuestManager.Instance.AldeanaIconSprite; // Usamos la referencia del QM
-            }
-            // *** FIN LÓGICA DE CAMBIO DE ICONO ***
-
-            CantidadTexto.text = $"{count} / {target}";
-
-            string instruccion;
-
-            if (count < target)
-            {
-                // Estado 1a: Faltan Knights por derrotar
-                instruccion = $"Objetivo: Derrota a los {target} Caballeros Negros que custodian la entrada a la mina 2.";
-            }
-            else
-            {
-                // Estado 1b: Knights derrotados, listos para entrar y rescatar (o estado 2)
-                instruccion = "¡Camino despejado! Entra en la mina para rescatar a la Aldeana.";
-
-                // Si el estado es 2 (Aldeana ya rescatada/interactuamos), el texto puede ser más simple
-                if (estado == 2)
-                {
-                    instruccion = "Regresa al pueblo. ¡La Aldeana ha sido rescatada!";
-                }
-            }
-
-            // 2. Instrucciones
-            InstruccionesTexto.text = instruccion;
         }
-        else // Estado 0 (inactiva) o 3 (entregada totalmente al Sabio, si existiera)
+        else // Estado 0 (inactiva) o cualquier otro no aplicable
         {
             if (QuestPanelGameObject.activeSelf) QuestPanelGameObject.SetActive(false);
         }

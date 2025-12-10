@@ -42,6 +42,7 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
         ActualizarIconoMision();
     }
 
+    // *** FUNCIÓN CLAVE MODIFICADA ***
     private void ManejarEstadosDeMision()
     {
         // Usamos el estado correcto
@@ -51,7 +52,16 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
 
         switch (estado)
         {
-            case 1: // Misión Aceptada - Rescatar Aldeana
+            case 1: // Misión Aceptada - Matar Knights (Aldeana encerrada)
+            case 10: // Knights derrotados - Matar Minotauro (Aldeana encerrada)
+                mensajes = new string[]
+                {
+                    "¡Ayuda! ¡Estoy encerrada! ¡Alguien, por favor, detenga al monstruo de la entrada!",
+                    "(La puerta está cerrada con llave...)",
+                };
+                break;
+
+            case 11: // NUEVO ESTADO: Llave obtenida - Rescatar Aldeana
                 int llaves = QuestManager.Instance.Key_Calabozo_Count;
                 int target = QuestManager.Key_Calabozo_Target;
 
@@ -66,7 +76,13 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
                     // El siguiente estado es "Rescatada" (Estado 2)
                     siguienteEstadoAlTerminar = 2;
                 }
-                
+                break;
+
+            case 2: // Aldeana Rescatada (Diálogo de agradecimiento final o nulo)
+                mensajes = new string[]
+                {
+                    "Por favor, vuelve a casa, ya estoy libre."
+                };
                 break;
 
         }
@@ -75,9 +91,7 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
 
     public void FinalizarDialogoCritico()
     {
-        // Paso de Estado 1 (Aldeana Atrapada, llave obtenida) -> Estado 2 (Rescatada)
-        // El 'siguienteEstadoAlTerminar' se estableció en 2 en ManejarEstadosDeMision() 
-        // cuando el jugador tiene la llave.
+        // Paso de Estado 11 (Aldeana Atrapada, llave obtenida) -> Estado 2 (Rescatada)
         if (siguienteEstadoAlTerminar == 2)
         {
             // 1. Marcar la misión como completada/avanzada
@@ -90,32 +104,27 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
 
         // Limpiamos la variable de avance
         siguienteEstadoAlTerminar = -1;
-
-        // NOTA: No es necesario llamar a ActualizarIconoMision() aquí si la escena va a cambiar inmediatamente.
     }
+
+    // *** FUNCIÓN CLAVE MODIFICADA ***
     private void ActualizarIconoMision()
     {
         if (IconoMision == null) return;
-        // Usamos el estado de la misión de rescate (Aldeana)
+        // El ícono solo se muestra cuando el jugador ya tiene la llave (Estado 11)
         int estado = QuestManager.Instance.Estado_Quest_Rescate;
-
-        // Muestra el ícono si la misión está aceptada (1) o si está pendiente de entrega (si tuvieras estado 1.5/2)
-        // Para la lógica actual (llave): Muestra el icono en Estado 1 (Buscando llave)
-        IconoMision.SetActive(estado == 1);
+        IconoMision.SetActive(estado == 11);
     }
 
+    // *** FUNCIÓN CLAVE MODIFICADA ***
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             jugadorCerca = true;
-
-            // Obtenemos el estado de la Misión de Rescate (Quest 3)
             int estadoRescate = QuestManager.Instance.Estado_Quest_Rescate;
 
-            // Solo es interactuable si la misión de Rescate está activa (Estado 1) 
-            // o si fue recién completada (Estado 2, por si hay un diálogo final).
-            if (estadoRescate == 1 || estadoRescate == 2)
+            // Es interactuable si la misión está ACEPTADA (1, 10, 11) o si ya está en Estado 2
+            if (estadoRescate == 1 || estadoRescate == 10 || estadoRescate == 11 || estadoRescate == 2)
             {
                 if (IconoMision != null) IconoMision.SetActive(false);
                 if (PanelInteraccion != null) PanelInteraccion.SetActive(true);

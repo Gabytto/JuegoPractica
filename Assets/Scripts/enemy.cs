@@ -173,7 +173,7 @@ public class enemy : MonoBehaviour
             // --- Misión 3: Knights (Rescate de Aldeana) ---
             else if (thisEnemyType == EnemyType.Knight)
             {
-                // Solo si la Misión de Rescate está activa (Estado 1)
+                // Solo si la Misión de Rescate está activa (Estado 1: Matar Knights)
                 if (QuestManager.Instance.Estado_Quest_Rescate == 1)
                 {
                     QuestManager.Instance.AddKnightKill();
@@ -183,10 +183,10 @@ public class enemy : MonoBehaviour
             // --- NUEVA LÓGICA: Minotauro (Llave del Calabozo) ---
             else if (thisEnemyType == EnemyType.Minotaur)
             {
-                // Solo si la Misión de Rescate está activa (Estado 1)
-                if (QuestManager.Instance.Estado_Quest_Rescate == 1)
+                // Solo si el Minotauro es el objetivo actual (Estado 10)
+                if (QuestManager.Instance.Estado_Quest_Rescate == 10) // <-- ¡CONDICIÓN CORREGIDA!
                 {
-                    // Este método se encarga de aumentar el contador (Key_Calabozo_Count)
+                    // Este método se encarga de aumentar el contador (Key_Calabozo_Count) y cambiar a Estado 11
                     QuestManager.Instance.AddKeyCalabozo();
                     Debug.Log("Quest: Minotauro derrotado. Llave del Calabozo obtenida.");
                 }
