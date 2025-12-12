@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 595916682}
         m_TargetAssemblyTypeName: ManagerEscenas, Assembly-CSharp
         m_MethodName: CerrarControles
         m_Mode: 1
@@ -537,7 +537,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 328f5c82f0e9d384dbc8da5866093963, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.777
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1407,11 +1407,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9843468972ae89d4ea596f7f80f8188d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 95b1a30e9ac8a3448b7a17b37cc871b5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.355
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
