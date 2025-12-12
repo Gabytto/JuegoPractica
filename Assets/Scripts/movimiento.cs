@@ -40,7 +40,7 @@ public class movimiento : MonoBehaviour
     // Disparo
     [SerializeField] GameObject laser;
     [SerializeField] private cooldownTimer coolDownTimer;
-
+    [SerializeField] private AudioClip sonidoDisparo;
     [SerializeField] private ManagerEscenas managerEscenas;
 
 
@@ -194,20 +194,18 @@ public class movimiento : MonoBehaviour
                 coolDownTimer.IniciarCooldown();
                 Debug.Log("Disparo realizado");
                 animator.SetTrigger("Attack");
-                // --- INICIO DE LA MODIFICACIÓN CRUCIAL ---##############################################################
-                // 1. Instancia el láser y guarda la referencia
+
                 GameObject nuevoLaserGO = Instantiate(laser, transform.position, Quaternion.identity);
-
-                // 2. Obtiene el script 'laser'
+                if (sonidoDisparo != null)
+                {
+                    AudioSource.PlayClipAtPoint(sonidoDisparo, transform.position);
+                }
                 laser laserScript = nuevoLaserGO.GetComponent<laser>();
-
-                // 3. Pasa la dirección usando la bandera 'giroIzq'
+              
                 if (laserScript != null)
                 {
-                    // Llama al método SetDirection (que definiremos en laser.cs)
                     laserScript.SetDirection(giroIzq);
                 }
-                // --- FIN DE LA MODIFICACIÓN CRUCIAL ---##########################################################
             }
         }
     }
