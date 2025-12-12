@@ -70,8 +70,9 @@ public class AldeanaController : MonoBehaviour, IDialogoCritico
                     // El jugador tiene la llave y la aldeana es liberada
                     mensajes = new string[]
                     {
-                    "¡Gracias, infinitas gracias Guerrero Azul!",
-                    "Creí que nunca podría salir de este calabozo."
+                    "¡Gracias por salvarme Guerrero Azul! Creí que me quedaría encerrada por siempre en este calabozo",
+                    "Ahora podré volver al pueblo en paz y tú podrás seguir explorando el bosque.",
+                    "¡Mucha suerte en tu camino!"
                     };
                     // El siguiente estado es "Rescatada" (Estado 2)
                     siguienteEstadoAlTerminar = 2;

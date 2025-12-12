@@ -40,8 +40,13 @@ public class movimiento : MonoBehaviour
     // Disparo
     [SerializeField] GameObject laser;
     [SerializeField] private cooldownTimer coolDownTimer;
-    [SerializeField] private AudioClip sonidoDisparo;
     [SerializeField] private ManagerEscenas managerEscenas;
+
+    [Header("Sonido")]
+    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sonidoPaso;
+    [SerializeField] private AudioClip sonidoDisparo;
 
 
 
@@ -50,6 +55,10 @@ public class movimiento : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
         ogSpeed = speed;
         mulSpeed = speed * valMulSpeed;
         ogDaño = daño;
@@ -142,6 +151,14 @@ public class movimiento : MonoBehaviour
         if (collision.CompareTag("potaVida"))
         {
             RecibirCuracion();
+        }
+    }
+
+    public void ReproducirSonidoPaso()
+    {
+        if (sonidoPaso != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(sonidoPaso);
         }
     }
     private void RecibirDaño()
